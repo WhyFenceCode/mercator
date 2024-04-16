@@ -1,15 +1,26 @@
 #include "/libs/settings.glsl"
+#include "/libs/depth_aware_blur.glsl"
 
 #ifdef FRAGMENT_SHADER
 
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
+uniform sampler2D colortex3;
+
+uniform sampler2D depthtex0;
+
+uniform vec3 sunPosition;
+uniform vec3 moonPosition;
 
 varying vec2 tex_coords;
 
 void main() {
+	vec3 normal = texture2D(colortex3, tex_coords).xyz;
+
+	vec3 lm_blur = da_blur(tex_coords, colortex2, depthtex0, 5, 0.1);
+
 	vec4 color = texture2D(colortex1, tex_coords);
-	vec4 output_color = color * texture2D(colortex2, tex_coords).x;
+	vec4 output_color = color * lm_blur.x;
 
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = output_color;
