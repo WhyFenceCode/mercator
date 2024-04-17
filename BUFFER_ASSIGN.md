@@ -29,3 +29,10 @@ Assigned in `gbuffers/data_writer`
 ### Used:
 - `composite/lighting`
 
+## Color Tex 4
+Shadow data from the shadow map in screen space
+### Assigned:
+Assigned in `composite/shadow_writer`
+### Used:
+- To be used in `composite/shadow_blur`
+- To be used in `composite/lighting`

@@ -15,7 +15,7 @@ void main() {
 	vec4 lm = texture2D(lightmap, lm_coords);
 	vec4 normal = vec4(normal_vec, 0);
 
-    /* DRAWBUFFERS:1234 */
+    /* DRAWBUFFERS:123 */
 	gl_FragData[0] = color;
 	gl_FragData[1] = lm;
 	gl_FragData[2] = normal;

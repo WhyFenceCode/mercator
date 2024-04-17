@@ -1,4 +1,4 @@
 #version 120
 #define FRAGMENT_SHADER
 
-#include "/programs/composite/lighting.glsl"
+#include "/programs/composite/shadow_writer.glsl"
