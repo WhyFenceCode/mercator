@@ -8,6 +8,8 @@
 uniform sampler2D shadowtex0;
 uniform sampler2D depthtex0;
 
+uniform sampler2D colortex3;
+
 uniform mat4 gbufferModelView;
 uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferProjection;
@@ -19,27 +21,36 @@ uniform mat4 shadowProjectionInverse;
 
 varying vec2 tex_coords;
 
+uniform vec3 shadowLightPosition;
+
 void main() {
-    float depth = texture(depthtex0, tex_coords).r;
-    vec3 screenPos = vec3(tex_coords, depth);
-    vec3 ndcPos = screenPos * 2 - 1;
-    vec3 veiwPos = projectAndDivide(gbufferProjectionInverse, ndcPos);
-    vec3 playerFeetPos = (gbufferModelViewInverse * vec4(veiwPos, 1.0)).xyz;
-    vec3 shadowViewPos = (shadowModelView * vec4(playerFeetPos, 1.0)).xyz;
-    vec3 shadowNdcPos = projectAndDivide(shadowProjection, shadowViewPos);
-    shadowNdcPos.xyz = distort(shadowNdcPos.xyz);
-    float bias = computeBias(shadowNdcPos);
-    vec3 shadowScreenPos = shadowNdcPos * 0.5 + 0.5;
-    shadowScreenPos.z -= bias;
-	float sampleDepth = texture2D(shadowtex0, shadowScreenPos.xy).r;
-    float shadowIntensity = step(sampleDepth, shadowScreenPos.z);
-    
+    float ndotl = dot(texture2D(colortex3, tex_coords).xyz, shadowLightPosition);
+
+    float shadow_intensity = 0.0;
+    float depth = 1.0;
+
+    if (ndotl > 0){
+        depth = texture(depthtex0, tex_coords).r;
+        vec3 screen_pos = vec3(tex_coords, depth);
+        vec3 ndc_pos = screen_pos * 2 - 1;
+        vec3 veiw_pos = projectAndDivide(gbufferProjectionInverse, ndc_pos);
+        vec3 player_feet_pos = (gbufferModelViewInverse * vec4(veiw_pos, 1.0)).xyz;
+        vec3 shadow_view_pos = (shadowModelView * vec4(player_feet_pos, 1.0)).xyz;
+        vec3 shadow_ndc_pos = projectAndDivide(shadowProjection, shadow_view_pos);
+        shadow_ndc_pos.xyz = distort(shadow_ndc_pos.xyz);
+        float bias = computeBias(shadow_ndc_pos);
+        vec3 shadow_screen_pos = shadow_ndc_pos * 0.5 + 0.5;
+        shadow_screen_pos.z -= bias;
+        float sample_depth = texture2D(shadowtex0, shadow_screen_pos.xy).r;
+        shadow_intensity = step(sample_depth, shadow_screen_pos.z);
+    }
+
     if (depth == 1.0 ){
-        shadowIntensity = 0.0;
+        shadow_intensity = 0.0;
     }
 
     /* DRAWBUFFERS:4 */
-	gl_FragData[0] = vec4(shadowIntensity, shadowIntensity, shadowIntensity, 1.0);
+	gl_FragData[0] = vec4(shadow_intensity, 0.0, 0.0, 1.0);
 }
 
 #endif
