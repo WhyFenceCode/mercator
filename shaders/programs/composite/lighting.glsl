@@ -17,9 +17,10 @@ varying vec2 tex_coords;
 void main() {
 	vec3 normal = texture2D(colortex3, tex_coords).xyz;
 
-	vec3 lm_blur = da_blur(tex_coords, colortex2, depthtex0, 5, 0.1);
+	vec3 lm_blur = da_blur(tex_coords, colortex2, depthtex0, 5, 0.1) * HDR_MULTIPLIER;
 
 	vec4 color = texture2D(colortex1, tex_coords);
+	color.xyz = pow(color.xyz, vec3(GAMMA_MULTIPLIER));
 	vec4 output_color = color * lm_blur.x;
 
 	/* DRAWBUFFERS:0 */
