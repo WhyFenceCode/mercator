@@ -58,11 +58,7 @@ vec3 filmic(vec3 x) {
 }
 
 //WhyFencePost: 
-/*
-Function:
-1-exp((-1-(x*x/(-4))-x)*x)
-*/
 vec3 whyfence(vec3 x) {
-  vec3 output = 1-exp((-1-(x*x/(-4))-x)*x);
-  return output;
+  vec3 output_color = 1-exp((-1-atan(pow(x, 2-sqrt(x)))+(floor(x)/30))*x);
+  return output_color;
 }
