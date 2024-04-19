@@ -64,7 +64,7 @@ void main() {
 	//gl_FragData[0] = color;
 
     /* DRAWBUFFERS:05 */
-	gl_FragData[0] = vec4(vec3(luminance), 1.0);
+	gl_FragData[0] = color;
 	gl_FragData[1] = vec4(vec3(luminance, luminance, 1.0), 1.0);
 }
 
