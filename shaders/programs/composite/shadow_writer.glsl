@@ -24,12 +24,12 @@ varying vec2 tex_coords;
 uniform vec3 shadowLightPosition;
 
 void main() {
-    float ndotl = dot(texture2D(colortex3, tex_coords).xyz, shadowLightPosition);
+    float n_dot_l = clamp(dot(texture2D(colortex3, tex_coords).xyz, shadowLightPosition), 0.0, 1.0);
 
     float shadow_intensity = 0.0;
     float depth = 1.0;
 
-    if (ndotl > 0){
+    //if (n_dot_l >= 0){
         depth = texture(depthtex0, tex_coords).r;
         vec3 screen_pos = vec3(tex_coords, depth);
         vec3 ndc_pos = screen_pos * 2 - 1;
@@ -43,7 +43,10 @@ void main() {
         shadow_screen_pos.z -= bias;
         float sample_depth = texture2D(shadowtex0, shadow_screen_pos.xy).r;
         shadow_intensity = step(sample_depth, shadow_screen_pos.z);
-    }
+
+        //shadow_intensity *= clamp(n_dot_l, 0.0, 1.0);
+
+    //}
 
     if (depth == 1.0 ){
         shadow_intensity = 0.0;

@@ -36,3 +36,10 @@ Assigned in `composite/shadow_writer`
 ### Used:
 - To be used in `composite/shadow_blur`
 - To be used in `composite/lighting`
+
+## AutoExposure Buffer Used for Halflife
+Autoexposure luminance data.
+### Assigned:
+Assigned in `composite/tonemap`
+### Used:
+- To be used in `composite/tonemap`
