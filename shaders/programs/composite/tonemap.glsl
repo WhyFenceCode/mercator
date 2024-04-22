@@ -22,7 +22,7 @@ void main() {
 
 	float old_luminance = texture2D(colortex5, tex_coords).r;
 	float luminance = luminance(average_color.rgb);
-	luminance = mix(old_luminance, luminance, 0.000001);
+	luminance = mix(old_luminance, luminance, 0.001);
 	float multiplier_value = 0.0;
 	if(texture2D(colortex5, tex_coords).b != 0.0) {
     	multiplier_value = key_value(mix(old_luminance, luminance, 0.00001));

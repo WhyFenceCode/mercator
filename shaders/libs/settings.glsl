@@ -5,9 +5,9 @@ const int colortex3Format = RGBA8_SNORM;
 
 const int colortex5Format = RGBA16F;
 const bool colortex5Clear = false;
+
+const float sunPathRotation = -30f;
 */
-
-
 
 //TONE MAPPING SELECTION
 #define TONE_ACES 0
@@ -20,7 +20,7 @@ const bool colortex5Clear = false;
 #define TONE_TATSU 7
 #define TONE_WHYFENCE 8
 #define TONE_WHYFENCE_ACES 9
-#define TONEMAPPER TONE_ACES //description [TONE_ACES TONE_REINHARD TONE_REINHARD_TWO TONE_UNREAL TONE_FILMIC TONE_UNCHARTED_TWO TONE_AGX TONE_TATSU TONE_WHYFENCE TONE_WHYFENCE_ACES]
+#define TONEMAPPER TONE_WHYFENCE_ACES //description [TONE_ACES TONE_REINHARD TONE_REINHARD_TWO TONE_UNREAL TONE_FILMIC TONE_UNCHARTED_TWO TONE_AGX TONE_TATSU TONE_WHYFENCE TONE_WHYFENCE_ACES]
 
 
 //Shadows
@@ -32,6 +32,6 @@ const bool colortex5Clear = false;
 
 
 //HRD
-#define HDR_MULTIPLIER 30.0  // High Dynamic Range [1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0]
-//#define HDR_MULTIPLIER 15.0  // High Dynamic Range [1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0]
+#define HDR_MULTIPLIER 13.0  // High Dynamic Range [5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0 30.0 31.0 32.0 33.0 34.0 35.0]
 #define GAMMA_MULTIPLIER 2.2  // Gamma [1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0]
+#define AUTOEXPOSURE_CONSTANT 1.03 // Auto Exposure Target [0.8 0.81 0.82 0.83 0.84 0.85 0.86 0.87 0.88 0.89 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99 1.0 1.01 1.02 1.03 1.04 1.05 1.06 1.07 1.08 1.09 1.1 1.11 1.12 1.13 1.14 1.15 1.16 1.17 1.18 1.19 1.2 1.21 1.22 1.23 1.24 1.25 1.26 1.27 1.28 1.29 1.3]
