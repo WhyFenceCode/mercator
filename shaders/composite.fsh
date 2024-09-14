@@ -1,5 +1,7 @@
 #version 330 compatibility
 
+#include /lib/distort.glsl
+
 uniform sampler2D colortex0;
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
@@ -40,6 +42,7 @@ void main() {
 	vec3 shadowViewPos = (shadowModelView * vec4(feetPlayerPos, 1.0)).xyz;
 	vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
 	shadowClipPos.z -= 0.001;
+	shadowClipPos.xyz = distortShadowClipPos(shadowClipPos.xyz);
 	vec3 shadowNDCPos = projectAndDivide(shadowProjection, shadowViewPos);
 	vec3 shadowScreenPos = shadowNDCPos * 0.5 + 0.5;
 
