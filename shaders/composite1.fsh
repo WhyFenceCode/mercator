@@ -2,8 +2,12 @@
 
 #include "/lib/distort.glsl"
 
+#define FOG_DENSITY 5.0
+
 uniform sampler2D colortex0;
 uniform sampler2D depthtex0;
+
+vec3 fogColor;
 
 uniform mat4 gbufferProjectionInverse;
 
@@ -27,5 +31,10 @@ void main() {
 
   vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
   vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
+
+  float distance = length(viewPos) / far;
+  float fogFactor = exp(-FOG_DENSITY * (1.0 - distance));
+  
+  color.rgb = mix(color.rgb, fogColor, clamp(fogFactor, 0.0, 1.0));
 
 }
