@@ -2,8 +2,8 @@
 
 #include /lib/distort.glsl
 
-#define SHADOW_QUALITY 2
-#define SHADOW_SOFTNESS 1
+#define SHADOW_QUALITY 2.0
+#define SHADOW_SOFTNESS 1.0
 
 uniform sampler2D colortex0;
 uniform sampler2D colortex1;
