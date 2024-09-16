@@ -2,6 +2,8 @@
 
 #include /lib/distort.glsl
 
+const int shadowMapResolution = 1024;
+
 #define SHADOW_QUALITY 2
 #define SHADOW_SOFTNESS 1
 
@@ -11,6 +13,7 @@ uniform sampler2D colortex2;
 uniform sampler2D shadowtex0;
 uniform sampler2D shadowtex1;
 uniform sampler2D shadowcolor0;
+uniform sampler2D depthtex0;
 
 
 uniform vec3 shadowLightPosition;
@@ -21,11 +24,20 @@ uniform mat4 gbufferModelViewInverse;
 uniform mat4 shadowModelView;
 uniform mat4 shadowProjection;
 
+uniform float viewHeight;
+uniform float viewWidth;
+
 in vec2 texcoord;
 
 vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
   vec4 homPos = projectionMatrix * vec4(position, 1.0);
   return homPos.xyz / homPos.w;
+}
+
+vec4 getNoise(vec2 coord){
+  ivec2 screenCoord = ivec2(coord * vec2(viewWidth, viewHeight)); // exact pixel coordinate onscreen
+  ivec2 noiseCoord = screenCoord % 64; // wrap to range of noiseTextureResolution
+  return texelFetch(noisetex, noiseCoord, 0);
 }
 
 vec3 getShadow(vec3 shadowScreenPos){
@@ -77,17 +89,6 @@ vec3 getSoftShadow(vec4 shadowClipPos){
   }
 
   return shadowAccum / float(samples); // divide sum by count, getting average shadow
-}
-
-
-
-  return shadowAccum / float(samples); // divide sum by count, getting average shadow
-}
-
-vec4 getNoise(vec2 coord){
-  ivec2 screenCoord = ivec2(coord * vec2(viewWidth, viewHeight)); // exact pixel coordinate onscreen
-  ivec2 noiseCoord = screenCoord % 64; // wrap to range of noiseTextureResolution
-  return texelFetch(noisetex, noiseCoord, 0);
 }
 
 const vec3 torchColor = vec3(1.0, 0.5, 0.08);
