@@ -6,7 +6,7 @@ uniform sampler2D mainColorGrade;
 in vec2 texcoord;
 
 vec4 colorGrade(vec4 color){
-  vec3 coords = vec3(0.0, 0.0, 0.0);
+  return texture(mainColorGrade, vec3(color.x, color.y, color.z));
 }
 
 /* DRAWBUFFERS:0 */
