@@ -7,7 +7,8 @@
 uniform sampler2D colortex0;
 uniform sampler2D depthtex0;
 
-vec3 fogColor;
+uniform vec3 fogColor;
+uniform float far;
 
 uniform mat4 gbufferProjectionInverse;
 
