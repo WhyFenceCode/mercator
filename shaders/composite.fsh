@@ -2,8 +2,6 @@
 
 #include /lib/distort.glsl
 
-const int shadowMapResolution = 1024;
-
 #define SHADOW_QUALITY 2
 #define SHADOW_SOFTNESS 1
 
