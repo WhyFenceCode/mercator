@@ -1,7 +1,7 @@
 #version 330 compatibility
 
 uniform sampler2D colortex0;
-uniform sampler2D depthtex0;
+uniform sampler2D mainColorGrade;
 
 in vec2 texcoord;
 
