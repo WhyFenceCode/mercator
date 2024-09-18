@@ -98,6 +98,8 @@ const vec3 ambientColor = vec3(0.1);
 layout(location = 0) out vec4 color;
 
 void main() {
+  color = texture(colortex0, texcoord);
+
 	float depth = texture(depthtex0, texcoord).r;
 	if(depth == 1.0){
 	  return;
@@ -122,6 +124,5 @@ void main() {
 	vec3 ambient = ambientColor;
 	vec3 sunlight = sunlightColor * dot(normal, worldLightVector) * shadow;
 
-	color = texture(colortex0, texcoord);
 	color.rgb *= blocklight + skylight + ambient + sunlight;
 }
