@@ -1,6 +1,5 @@
 #version 330 compatibility
 
-uniform sampler2D lightmap;
 uniform sampler2D gtexture;
 
 in vec2 lmcoord;
@@ -12,7 +11,6 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	color = texture(gtexture, texcoord) * glcolor;
-	color *= texture(lightmap, lmcoord);
 	if (color.a < 0.1) {
 		discard;
 	}
